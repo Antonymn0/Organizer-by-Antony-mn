@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
-import Icon from 'react-native-vector-icons/FontAwesome';
+
+import Icon from 'react-native-vector-icons/Entypo';
 
 import {
    SafeAreaView,
@@ -24,9 +25,9 @@ export default function Calculator({navigation}) {
    
    
    // states
-   const [results, setResults] = useState('20.2');
+   const [results, setResults] = useState('0');
    const [inputCurrent, setinputCurrent] = useState('0');
-   const [equation, setEquation] = useState(['', ...inputCurrent]);
+   const [equation, setEquation] = useState('', ...inputCurrent);
    const [symbol, setSymbol] = useState('');
    const [prevInput, setprevInput] = useState('');
     
@@ -77,10 +78,17 @@ export default function Calculator({navigation}) {
       setEquation(newEquation)
       var newinputCurrent = inputCurrent
       newinputCurrent = newinputCurrent.substring(0, newinputCurrent.length-1);
-      setinputCurrent(newinputCurrent)
+     setinputCurrent(newinputCurrent)
+     if (inputCurrent.length < 1) { setinputCurrent('0') }
+     if(equation.length < 1) {setEquation('0')}
    }
-
-   // clear input
+    // negate input
+  const negate = () => {
+     let neg ='-'
+    setinputCurrent('0')
+   
+  }
+   // clear input  = clear all fields
    const clearInput = () => {
       setEquation('0')
       setResults('0')
@@ -132,16 +140,20 @@ export default function Calculator({navigation}) {
       
    }
 
-   return (
+  return (
+   
+      
      <View style={styles.parentContainer}>
          <View style={styles.resultsContainer}>
          <Text style={styles.inputField}>  {equation} </Text>
          <Text style={styles.resultsField}> = {results} </Text>
        </View>
        <View>
-         <Text> Inputcurrent = {inputCurrent}</Text>
-         <Text> prevInput = {prevInput}</Text>
-       </View>
+        <Text > Inputcurrent = {inputCurrent}</Text>
+        <Text > prevInput = {prevInput}</Text>
+      </View>
+      
+      
        <View style={styles.buttonsContainer}>
          <View style={styles.buttonColumns}>
            <TouchableOpacity
@@ -174,7 +186,7 @@ export default function Calculator({navigation}) {
          </View>
 
          <View style={styles.buttonColumns}>
-           <TouchableOpacity>
+           <TouchableOpacity onPress={() => {negate}}>
              <Text style={styles.buttons}> -/+ </Text>
            </TouchableOpacity>
            <TouchableOpacity
@@ -205,9 +217,8 @@ export default function Calculator({navigation}) {
              onPress={() => {
                deleteItem();
              }}>
-             <Text style={styles.buttons}>
-               
-               <Icon name="remove" size={25} />
+             <Text style={styles.buttons} > 
+               <Icon name="erase" size={25}  style={styles.icon} />
              </Text>
            </TouchableOpacity>
            <TouchableOpacity
@@ -262,7 +273,7 @@ export default function Calculator({navigation}) {
                currentInput('/');
                operator('/');
              }}>
-             <Text style={styles.buttons}> / </Text>
+             <Text style={styles.buttons}> /  </Text>
            </TouchableOpacity>
            <TouchableOpacity
              onPress={() => {
@@ -325,4 +336,9 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: '#fff',
   },
+  icon: {
+    padding: 25,
+    
+  },
+
 });

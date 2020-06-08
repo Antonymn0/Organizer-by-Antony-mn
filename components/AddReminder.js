@@ -3,7 +3,7 @@ import {
   SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TextInput, CheckBox, TouchableOpacity,
 } from 'react-native';
 
-export default function AddReminder({ addReminderFunc } ) {
+export default function AddReminder({ addReminderFunc} ) {
     var reminderHeader = ''
     var reminderNote =''
 
@@ -27,12 +27,12 @@ export default function AddReminder({ addReminderFunc } ) {
             }}
           />
         </View>
-        <TouchableOpacity
+        <TouchableOpacity style={styles.addButton}
           onPress={ ()=> {
             addReminderFunc(reminderHeader, reminderNote) }
           } >
-          <View style={styles.addButton}>
-            <Text style={styles.addButton}> add</Text>
+          <View style={styles.addButtonText}>
+            <Text style={styles.addButtonText}> add</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -48,15 +48,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 5,
     zIndex: 5,
+    alignContent: 'center',
   },
   addTittle: {
     fontSize: 25,
-    borderBottomWidth: 1,
-    padding: 8,
+    padding: 5,
   },
   addNote: {
-    fontSize: 15,
-    padding: 8,
+    fontSize: 20,
+    padding: 5,
     borderTopWidth: 1,
     borderColor: '#ccc',
   
@@ -64,22 +64,25 @@ const styles = StyleSheet.create({
     inputContainer: {
       flex: 5,
       borderWidth: 1,
-      padding: 10,
+      padding: 5,
       borderRadius: 20,
-      
+      alignContent: 'center',
   },
     addButton: {
         flex: 1,
-        borderRadius: 15,
+        borderRadius: 10,
+        height: 70,
         backgroundColor: 'blue',
         alignItems: 'center',
-      alignContent: 'center',
         textAlign: 'center',
-        fontSize: 25,
         color: 'white',
-        padding: 5,
-        marginLeft: 5,
-        
-        
+      marginLeft: 5, 
+        marginTop: 10,
   },
+  addButtonText: {
+    color: '#fff',
+    paddingTop: 8,
+    alignContent: 'center',
+    fontSize: 20,
+    }
 });

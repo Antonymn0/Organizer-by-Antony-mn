@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,10 +15,7 @@ import AddReminder from './AddReminder';
 
 export default function Reminders() {
   const [reminders, setReminders] = useState([
-    {tittle: 'tittle', note: 'note', id: '1'},
-    {tittle: 'Buy groceries', note: 'from grocery store on my way home. remember bread too',      id: '2',
-    },
-    { tittle: 'Visit john',  note: 'at his place immediately after work', id: '2',    },
+    { tittle: 'Title...',  note: 'note...', id: '2',    },
   ]);
     
     
@@ -28,21 +26,34 @@ export default function Reminders() {
         ...newReminders,
         {tittle: title, note: note, id: Math.random().toString() },
       ])  )
-    };
+  };
+  const deleteReminder = (id) => {
+    let newReminders = reminders
+    newReminders = newReminders.filter(item => item.id !== id)
+    setReminders(newReminders)
+
+  }
 
   return (
     <View style={styles.reminderContainer}>
      
       {reminders.map(reminder => {
         return (
-          <ScrollView>
-            <View style={styles.reminderItemContainer}>
-              <TextInput
-                style={styles.reminderHeader}
-                multiline
-                placeHolder="Tittle"
-                value={reminder.tittle}
-              />
+          <ScrollView key={reminder.id}>
+            <View style={styles.reminderItemContainer} key={reminder.id}>
+              <View style={styles.headerView}>
+                <TextInput   style={styles.reminderHeader}
+                  multiline
+                  placeHolder="Tittle"
+                  value={reminder.tittle}
+                  />
+                <TouchableOpacity style={styles.icon}
+                  onPress={() => { deleteReminder(reminder.id) }}> 
+                  <Text style={styles.icon}> 
+                  <Icon name='trash-o' size={25}/>
+                  </Text>
+                </TouchableOpacity>
+              </View>
               <TextInput
                 style={styles.reminderNote}
                 multiline
@@ -54,9 +65,11 @@ export default function Reminders() {
         );
       })}
       <View style={styles.addReminderContiner}>
-        <AddReminder addNewReminder={ addReminderFunc } />
+        <AddReminder addNewReminder={addReminderFunc} />
       </View>
+      
     </View>
+    
   );
 }
 
@@ -78,6 +91,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   reminderHeader: {
+    flex: 4,
     fontSize: 25,
     padding: 5,
     paddingLeft: 10,
@@ -87,7 +101,14 @@ const styles = StyleSheet.create({
     fontSize: 19,
     padding: 3,
   },
-    addReminderContiner: {
-        
+    headerView: {
+      display: 'flex',
+      flexDirection: 'row',
   },
+  icon: {
+    padding: 4,
+    alignItems: 'flex-end',
+    alignContent: 'center',
+    textAlign: 'center',
+    }
 });

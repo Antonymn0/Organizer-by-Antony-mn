@@ -27,14 +27,7 @@ const screens = {
    Reminders: {
       screen: Reminders,
    },
-   Calculator: {
-      screen: Calculator,
-      navigationOptions: ({ navigation }) => { // a function that takes navigation and returns header component
-         return {
-            headerTitle: () => <Header navigation={navigation} />,
-         };
-      },
-   },
+   
    
    
 }

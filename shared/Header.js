@@ -27,7 +27,7 @@ export default function Header({ navigation }) {
            onPress={() => {
              navigation.openDrawer();
            }}>
-           <Icon name="bars" size={20} color="#fff" />
+           <Icon name="bars" size={28} color="#fff" />
           
          </TouchableOpacity>
        </View>

@@ -10,10 +10,7 @@ import Addtodo from './Addtodo';
 
 export default function Todos() {
     const [todos, setTodos] = useState([
-      {name: 'Take breakfast', key: '1', checked: false},
-      {name: 'Brush teeth', key: '2',  checked: true},
-      {name: 'Shower', key: '3',  checked: true},
-      {name: 'call uber', key: '4',  checked: false},
+      {name: 'To do item...', key: '1', checked: false},
     ]);
     const addTodo = (val) => {
       var newTodos =  todos
@@ -51,13 +48,13 @@ export default function Todos() {
             {/*checkbox */  }
             <Text> <CheckBox style={styles.checkbox} checked={item.checked}  
                 onPress = {() => updateCheckbox(item.key) } /> </Text>
-            <Text style={styles.textinputs}> {item.name} </Text>
+            <Text style={styles.textInputs}> {item.name} </Text>
               {/* cancel button */}
-            <Text style={styles.cancelbtn}>
-              <Icon name='remove'
-              onPress={() => { deleteItem(item.key) }} /> </Text> 
+            <Text style={styles.cancelbtn} onPress={() => { deleteItem(item.key) }}> 
+              <Icon name='trash-o' size={25}
+               /> </Text> 
           </TouchableOpacity>
-         
+        
             </View>
        )
       }
@@ -95,7 +92,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     marginBottom: 2,
-    padding: 5,
+    padding: 10,
     backgroundColor: '#f2f2f2',
     borderRadius: 10,
   },
@@ -107,22 +104,20 @@ const styles = StyleSheet.create({
           
   },
   textInputs: {
-    flex: 1,
-    fontSize: 30,
+    flex: 9,
+    fontSize: 18,
     alignItems: 'center',
     alignContent: 'center',
-    textAlign: 'center',
     padding: 5,
-    color: 'red'
          
         },
-        cancelbtn: {
-          color: 'red',
-          alignItems: 'flex-end',
+  cancelbtn: {
+          flex: 1,
+          color: 'gray',
+           alignItems: 'flex-end',
+          alignContent: 'center',
           padding: 10,
-          fontSize: 20,
-          display: 'none',
-          
+                       
         },
        
 
