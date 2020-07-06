@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import {
-  SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TextInput, CheckBox, Button, TouchableOpacity,
+  SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TextInput, CheckBox, Button, TouchableOpacity, Alert,
 } from 'react-native';
 import Todos from './Todos';
 
-export default function Addtodo({ addTodo }) {
+export default function Addtodo({ addTodo, storedData }) {
+      // initial inputText value usestate
   const [todoTxt, settodoTxt] = useState('')
     
     return (
@@ -17,10 +18,10 @@ export default function Addtodo({ addTodo }) {
           />
         <TouchableOpacity 
           onPress={() => {
-            if (todoTxt !== '') {
-              addTodo(todoTxt) 
+          if (todoTxt !== '') {
+              addTodo(todoTxt)
               settodoTxt('')
-            } 
+              } 
           } }
         >
            <Text style={styles.txttodo}> Add </Text>

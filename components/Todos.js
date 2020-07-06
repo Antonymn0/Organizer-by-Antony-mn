@@ -1,37 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {
-  SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TextInput, CheckBox, TouchableOpacity,
+  SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TextInput, CheckBox, TouchableOpacity, Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-community/async-storage';
 
 //import screens
 import Addtodo from './Addtodo';
 
 
 export default function Todos() {
+
+  // todo useState initialization
     const [todos, setTodos] = useState([
-      {name: 'To do item...', key: '1', checked: false},
+      {name: 'To do item...', key: Math.random().toString(), checked: false},
     ]);
+  
+  // set local storage for todos
+  const storeTodos = async (value) => {
+    try {
+       var todosJsonvalue =  JSON.stringify(value)
+        await AsyncStorage.setItem('@storedodos', todosJsonvalue)
+    } catch(err) {
+      Alert.alert(err)
+    }
+  }
+  // read stored todos from local storage and update setTodos
+  const getTodos = async () => {
+     var storedtodos = await AsyncStorage.getItem('@storedodos')
+     if (storedtodos !== null) {
+       storedtodos =JSON.parse(storedtodos)
+       setTodos(storedtodos)
+     } else {
+       Alert.alert('Todo list  is empty')
+     }
+   
+  }
+  // useffect loads items from memory only once when the app loads
+  useEffect(() => {
+    getTodos()
+  }, [])
+  
+  // add todos
     const addTodo = (val) => {
       var newTodos =  todos
       setTodos([...newTodos, { name: val, key: Math.random(), checked: false }]);   
-      
+      storeTodos(todos)  // store todos into the local storage
     }
     const deleteItem = (key) => {
       var newTodos = todos 
-      newTodos = newTodos.filter(item => item.key !== key)
+      newTodos = newTodos.filter(item => item.key !== key) //filter out deleted item
       setTodos(newTodos)
+      storeTodos(todos)
     }
    const updateCheckbox = (key) => {
      var newTodos = todos
-     var todoitem = newTodos.find(todo => todo.key === key)
+     var todoitem = newTodos.find(todo => todo.key === key) 
      todoitem.checked = !todoitem.checked
     setTodos(newTodos)
    }
-   const toggleCancelbtn = (key) => {
-      
-   }
-   
+    
 
   return (
  
@@ -40,9 +68,9 @@ export default function Todos() {
         {/* output todos to the screen with .map function */}
     {todos.map((item)=>{
       return (
-          <View >
+          <View  key={item.key}>
             <TouchableOpacity style={styles.todoItem}
-              key={item.key}
+             
               onPress = {() => updateCheckbox(item.key) } 
           >
             {/*checkbox */  }
@@ -54,15 +82,21 @@ export default function Todos() {
               <Icon name='trash-o' size={25}
                /> </Text> 
           </TouchableOpacity>
-        
+          
             </View>
        )
       }
     )}
-    </ScrollView>
-     
+      </ScrollView>
+      
+      <TouchableOpacity onPress={() => {
+          getTodos()
+      }}> 
+        <Text> Stored todos</Text>
+      </TouchableOpacity>
+      
     <View style={styles.addTodo}>  
-      <Addtodo addTodo={addTodo} /> 
+        <Addtodo addTodo={addTodo} /> 
     </View>
    
   </View>

@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import {
   SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TextInput, CheckBox, TouchableOpacity,
 } from 'react-native';
-
-export default function AddReminder({ addReminderFunc} ) {
-    var reminderHeader = ''
-    var reminderNote =''
+export default function AddReminder({ addReminderFunc, funcOne} ) {
+    var reminderHeader = '1'
+    var reminderNote ='2'
 
     return (
       <View style={styles.addReminderContainer}>
@@ -28,9 +27,9 @@ export default function AddReminder({ addReminderFunc} ) {
           />
         </View>
         <TouchableOpacity style={styles.addButton}
-          onPress={ ()=> {
-            addReminderFunc(reminderHeader, reminderNote) }
-          } >
+          onPress={() => {
+            addReminderFunc(reminderHeader, reminderNote);
+          }  } >
           <View style={styles.addButtonText}>
             <Text style={styles.addButtonText}> add</Text>
           </View>

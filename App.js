@@ -14,11 +14,14 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+// import screens
 import Todos from './components/Todos';
 import About from './components/About';
 import Reminders from './components/Reminders';
 import Home from './components/Home';
 import RootDrawerNavigator from './routes/drawerNavigator';
+import RecipeApp from './components/RecipeApp';
 
 
  
@@ -31,7 +34,8 @@ import RootDrawerNavigator from './routes/drawerNavigator';
         <View style={styles.main}>
          
           <View style={styles.drawer}> 
-            <RootDrawerNavigator />
+           {/* <RootDrawerNavigator /> */}
+           <RecipeApp />
          </View>
         </View>
      </TouchableWithoutFeedback>
